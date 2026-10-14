@@ -8,7 +8,7 @@ A free sampled upright piano from 1967, recorded with two microphones of opposit
 
 ![The open upright piano](piano.jpg)
 
-**[Download](../../releases/latest)** · [Project page](https://mikkopatama.com/Helsinki1967) · [Video](https://www.youtube.com/watch?v=rO6eh6xXX_U)
+**[Download](../../releases/latest)** · [Project page](https://mikkopatama.com/helsinki1967) · [Video](https://www.youtube.com/watch?v=rO6eh6xXX_U)
 
 ## Formats
 
