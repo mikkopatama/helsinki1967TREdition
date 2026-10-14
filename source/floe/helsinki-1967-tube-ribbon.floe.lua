@@ -222,13 +222,4 @@ floe.add_ir(library, { name = "Medium Room", path = IR .. "Medium Room.flac", ta
 floe.add_ir(library, { name = "Large Room", path = IR .. "Large Room.flac", tags = { "acoustic", "large room" } })
 floe.add_ir(library, { name = "Grandmother Spring", path = IR .. "Grandmother.flac" })
 
--- Attribution: the Lady Chapel impulse response is CC BY 4.0 and must be credited.
-floe.set_attribution_requirement(IR .. "stalbans.flac", {
-    title = "Lady Chapel, St Albans Cathedral impulse response",
-    license_name = "CC-BY-4.0",
-    license_url = "https://creativecommons.org/licenses/by/4.0/",
-    attributed_to = "Audiolab, University of York: Marcin Gorzel, Gavin Kearney, Aglaia Foteinou, Sorrel Hoare, Simon Shelley",
-    attribution_url = "https://www.openairlib.net",
-})
-
 return library
