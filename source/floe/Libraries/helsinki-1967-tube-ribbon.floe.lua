@@ -38,7 +38,7 @@ local library = floe.new_library({
         .. "sampled with a custom modified CV-12 tube condenser and a stereo Blumlein ribbon pair.\n"
         .. "35 sampled keys, 5 velocity layers, 2 round robins, plus release and hammer samples.\n"
         .. "Load Tube and Ribbon into separate layers and balance the microphones with the layer volumes.",
-    revision = 1,
+    revision = 2,
     background_image_path = "Images/background.jpg", -- alternative: "Images/walnut.png"
     icon_image_path = "Images/icon.png",
     background_overlay = {
