@@ -8,7 +8,7 @@
 -- DecentSampler version is rebuilt from Floe's 3 layers instead: each microphone
 -- is its own instrument, so the layer volume knobs are the mic faders.
 
-floe.set_required_floe_version("2.0.3")
+floe.set_required_floe_version("2.0.5")
 
 --------------------------------------------------------------------------------
 -- Settings
@@ -89,12 +89,15 @@ end
 
 -- Samples played when a key is released. In Floe these are one-shots: no
 -- volume envelope, no loop, played to the end.
-local function add_note_off(instrument, path, root, low, high, gain_db)
+-- trigger_event "note-end" follows the sustain pedal like a piano's dampers: on
+-- key release if the pedal is up, otherwise when the pedal is lifted (for keys
+-- no longer held). "note-off" fires on every key release regardless of pedal.
+local function add_one_shot(instrument, trigger_event, path, root, low, high, gain_db)
     floe.add_region(instrument, {
         path = path,
         root_key = root,
         trigger_criteria = {
-            trigger_event = "note-off",
+            trigger_event = trigger_event,
             key_range = key_range(low, high),
         },
         loop = { loop_requirement = "never-loop" },
@@ -105,14 +108,16 @@ end
 local function add_release(instrument, mic, gain_db)
     for _, s in ipairs(mapping.release) do
         local name, root, low, high = table.unpack(s)
-        add_note_off(instrument, SAMPLES .. name .. mic .. ".flac", root, low, high, gain_db)
+        -- Damper/release sound: waits for the sustain pedal.
+        add_one_shot(instrument, "note-end", SAMPLES .. name .. mic .. ".flac", root, low, high, gain_db)
     end
 end
 
 local function add_hammer(instrument, gain_db)
     for _, s in ipairs(mapping.hammer) do
         local name, root, low, high = table.unpack(s)
-        add_note_off(instrument, SAMPLES .. name .. ".flac", root, low, high, gain_db)
+        -- Key mechanism sound: happens on every key release, pedal or not.
+        add_one_shot(instrument, "note-off", SAMPLES .. name .. ".flac", root, low, high, gain_db)
     end
 end
 
@@ -169,12 +174,12 @@ local ribbon_sustain = floe.new_instrument(library, {
 })
 add_sustain(ribbon_sustain, RIBBON)
 
--- Noises: these only sound when a key is released.
+-- Noises: release samples sound when a note ends (pedal-aware), hammer noise on every key release.
 
 local release_hammer = floe.new_instrument(library, {
     name = "Release + Hammer",
     folder = "Noises",
-    description = "Release samples of both microphones and hammer noise, played on key release.",
+    description = "Release samples of both microphones (they follow the sustain pedal) and hammer noise (on every key release).",
     tags = NOISE_TAGS,
     waveform_audio_path = SAMPLES .. "C3_C3-C#3_0-127_RELRB.flac",
 })
@@ -185,7 +190,7 @@ add_hammer(release_hammer, 0)
 local release_tube = floe.new_instrument(library, {
     name = "Release - Tube",
     folder = "Noises",
-    description = "Release samples of the tube microphone, played on key release.",
+    description = "Release samples of the tube microphone. They follow the sustain pedal.",
     tags = NOISE_TAGS,
     waveform_audio_path = SAMPLES .. "C3_C3-C#3_0-127_RELCV.flac",
 })
@@ -194,7 +199,7 @@ add_release(release_tube, TUBE, 0)
 local release_ribbon = floe.new_instrument(library, {
     name = "Release - Ribbon",
     folder = "Noises",
-    description = "Release samples of the ribbon microphones, played on key release.",
+    description = "Release samples of the ribbon microphones. They follow the sustain pedal.",
     tags = NOISE_TAGS,
     waveform_audio_path = SAMPLES .. "C3_C3-C#3_0-127_RELRB.flac",
 })
@@ -203,7 +208,7 @@ add_release(release_ribbon, RIBBON, 0)
 local hammer = floe.new_instrument(library, {
     name = "Hammer",
     folder = "Noises",
-    description = "Hammer noise of the ribbon microphones, played on key release.",
+    description = "Hammer noise of the ribbon microphones, played on every key release.",
     tags = NOISE_TAGS,
     waveform_audio_path = SAMPLES .. "C3_C3-C#3_0-127_HAMMERRB.flac",
 })
