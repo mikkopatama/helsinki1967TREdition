@@ -1,0 +1,7 @@
+Helsinki 1967 Tube/Ribbon Edition Change log
+
+
+25.10.2026
+
+- Floe and DecentSampler versions updated: both now extend to the lowest A key, covering the full 88 key range.
+C0 sample is used for the lowest keys.
