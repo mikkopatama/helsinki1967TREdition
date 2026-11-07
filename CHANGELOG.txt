@@ -1,5 +1,8 @@
 Helsinki 1967 Tube/Ribbon Edition Change log
 
+07.11.2026
+
+- Updated Floe version: now release samples are not triggered if sustain pedal is pressed. Floe version 2.0.5 required.
 
 25.10.2026
 
