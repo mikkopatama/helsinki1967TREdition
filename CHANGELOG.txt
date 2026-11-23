@@ -1,5 +1,9 @@
 Helsinki 1967 Tube/Ribbon Edition Change log
 
+23.11.2026
+
+- Hotfix for Floe version: the .floe-pkg file wasn't extracting the library files correctly, resulting in the library not showing in Floe after installation. The newest released package fixes this problem.
+
 07.11.2026
 
 - Updated Floe version: now release samples are not triggered if sustain pedal is pressed. Floe version 2.0.5 required.
